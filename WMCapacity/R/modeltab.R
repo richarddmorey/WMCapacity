@@ -852,38 +852,38 @@ return(counter)
 	if(!useZ) NumZEffs = 0
 	
 	if(NumKEffs==0 & NumZEffs==0 & NumGEffs==0){
-		gmessage("You must specify at least one effect on one parameter.", title="Model definition error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage("You must specify at least one effect on one parameter.", title="Model definition error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(FALSE)
 	}
 	
 	if(!is.null(wommbatAnalysis$Models[[modelName]]))
 	{
-		gmessage(paste("That name is already in use. Please select a unique name for the model."), title="Model definition error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("That name is already in use. Please select a unique name for the model."), title="Model definition error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(FALSE)
 	}
 	
 	if(modelName=="")
 	{
-		gmessage(paste("Please select a name for the model."), title="Model definition error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("Please select a name for the model."), title="Model definition error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(FALSE)
 	}
 	
 	
 	if ( inherits(invWishartScalar, "try-error") | is.na(invWishartScalar))
 	{
-		gmessage(paste("Could not coerce the inverse Wishart prior scalar parameter to numeric."), title="Prior error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("Could not coerce the inverse Wishart prior scalar parameter to numeric."), title="Prior error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(FALSE)
 	}
 
 	
 	if ( inherits(IGa0, "try-error") | inherits(IGb0, "try-error") | is.na(IGa0) | is.na(IGb0))
 	{
-		gmessage(paste("Could not coerce the inverse gamma prior parameters to numerics."), title="Prior error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("Could not coerce the inverse gamma prior parameters to numerics."), title="Prior error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(FALSE)
 	}
 	
@@ -897,22 +897,22 @@ return(counter)
 		 is.na(MuZMean) | is.na(MuKSD) |
 		 is.na(MuZSD) | is.na(MuGSD))
 	{
-		gmessage(paste("Could not coerce the grand mean prior parameters to numerics."), title="Prior error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("Could not coerce the grand mean prior parameters to numerics."), title="Prior error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(FALSE)
 	}
 
 	if (MuKSD <=0 | MuZSD <=0 | MuGSD <=0) 
 	{
-		gmessage(paste("Standard deviations of priors on grand means must be greater than 0."), title="Prior error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("Standard deviations of priors on grand means must be greater than 0."), title="Prior error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(FALSE)
 	}
 	
 	if (IGa0 <=0 | IGb0 <=0) 
 	{
-		gmessage(paste("Inverse gamma prior parameters must both be greater than 0."), title="Prior error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("Inverse gamma prior parameters must both be greater than 0."), title="Prior error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(FALSE)
 	}
 	
@@ -920,8 +920,8 @@ return(counter)
 	removed = .womRemoveMissingCovarianceItems()
 	if(removed)
 	{
-		gmessage(paste("Removed elements of the covariance groups that were missing from the model."), title="Warning",
-					icon="warning",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("Removed elements of the covariance groups that were missing from the model."), title="Warning",
+					icon="warning",toolkit=gWidgets::guiToolkit("RGtk2"))
 	}
 	
 	covNgroups <- gtkTreeModelIterNChildren(treemodelCov,iter=NULL)
@@ -956,8 +956,8 @@ return(counter)
 	{
 		minInvWishartScalar <- min(pmax(sizes - obs,0))
 		if( invWishartScalar <= minInvWishartScalar ){
-			gmessage(paste("For the selected covariance matrices, the inverse Wishart prior scalar parameter must be greater than ",minInvWishartScalar,".",sep=""), title="Prior error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+			gWidgets::gmessage(paste("For the selected covariance matrices, the inverse Wishart prior scalar parameter must be greater than ",minInvWishartScalar,".",sep=""), title="Prior error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 			return(FALSE)
 		}
 	}
@@ -1481,7 +1481,7 @@ return(TRUE)
 	modsInt=list()
 
 	for(i in 1:nFactors){
-		modsInt[[i]]=combinations(nFactors,i)
+		modsInt[[i]]=gtools::combinations(nFactors,i)
 	}
 
 	list(modsInt,names,levels)

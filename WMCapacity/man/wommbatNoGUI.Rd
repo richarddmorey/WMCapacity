@@ -26,6 +26,4 @@
        \code{\link{wommbatGUI}}, for the GUI interface
      (useful for simulations).
      }
-     \examples{
-     }
      \keyword{nonlinear}

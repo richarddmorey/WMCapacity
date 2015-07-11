@@ -272,7 +272,7 @@
 	
 	scrollBar <- theWidget("hscrollbar1")
 	gSignalHandlerBlock(scrollBar, StateEnv$handlers$diagnosticScrollBar1)
-	adjustment <- gtkAdjustmentNew(value = 1, lower = 1, upper = maxPar, step.inc=1)
+	adjustment <- gtkAdjustmentNew(value = 1, lower = 1, upper = maxPar, step.incr=1)
 	scrollBar$setAdjustment(adjustment)
 	gtkAdjustmentSetValue(scrollBar$getAdjustment(), 1)
 			
@@ -422,7 +422,7 @@
 		dev.set(which = StateEnv$Graphics$DensityDevice)
 	}else{
 		da = theWidget("diagnosticDrawingarea2")
-		asCairoDevice(da)
+		cairoDevice::asCairoDevice(da)
 		StateEnv$Graphics$DensityDevice = dev.cur()
 	}
 	par(mar=c(4.5,0,0,0))
@@ -437,7 +437,7 @@
 		dev.set(which = StateEnv$Graphics$ACFDevice)
 	}else{
 		da = theWidget("diagnosticDrawingarea3")
-		asCairoDevice(da)
+		cairoDevice::asCairoDevice(da)
 		StateEnv$Graphics$ACFDevice = dev.cur()
 	}
 	par(mar=c(4.5,4,1,1))
@@ -480,7 +480,7 @@
 	}
 	
 	scrollBar <- theWidget("hscrollbar1")
-	adjustment <- gtkAdjustmentNew(value = 1, lower = 1, upper = maxPar, step.inc=1)
+	adjustment <- gtkAdjustmentNew(value = 1, lower = 1, upper = maxPar, step.incr=1)
 	scrollBar$setAdjustment(adjustment)
 	gtkAdjustmentSetValue(scrollBar$getAdjustment(), 1)
 			
@@ -543,7 +543,7 @@
 		dev.set(which = StateEnv$Graphics$ChainsDevice)
 	}else{
 		da = theWidget("diagnosticDrawingarea1")
-		asCairoDevice(da)
+		cairoDevice::asCairoDevice(da)
 		StateEnv$Graphics$ChainsDevice = dev.cur()
 	}
 	par(mar=c(4.5,4,1,1))
@@ -552,7 +552,7 @@
 	abline(h=postQuant,col="blue",lty=2)
 	lines(lowess(chain[(burnin+1):upperLimit],f=.25),col="red",lwd=2)
 	axis(2)
-	axis(1,at=c(1,upperLimit-burnin),label=c(burnin+1,upperLimit))
+	axis(1,at=c(1,upperLimit-burnin),labels=c(burnin+1,upperLimit))
 	box()
 	
 }

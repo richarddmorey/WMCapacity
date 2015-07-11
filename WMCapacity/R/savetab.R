@@ -25,10 +25,10 @@
 	freezeGUI()
 	on.exit(thawGUI())
 	filename = paste(analysisName,".Rdata",sep="")
-	loaded = try(save(file=filename,env=wommbatAnalysis), silent=T)
+	loaded = try(save(file=filename,envir=wommbatAnalysis), silent=T)
 	if (inherits(loaded, "try-error")){
-		gmessage(paste("The R data file could not be saved. Is the location read-only?.",
-						sep=""), title="File error",icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("The R data file could not be saved. Is the location read-only?.",
+						sep=""), title="File error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(0)
 	}
 
@@ -53,8 +53,8 @@
 	if(file.exists(directoryName)) unlink(directoryName)
 	success = dir.create(directoryName)
 	if (!success){
-			gmessage(paste("The analysis text file directory could not be created. Is the location read-only?.",
-						sep=""), title="File error",icon="error",toolkit=guiToolkit("RGtk2"))
+			gWidgets::gmessage(paste("The analysis text file directory could not be created. Is the location read-only?.",
+						sep=""), title="File error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 			return(0)
 		}
 	.womCreateSummaryFile(analysisName,directoryName)
@@ -72,8 +72,8 @@
 			subPath = file.path(directoryName,subDirectoryName)
 			success = dir.create(subPath)
 			if (!success){
-				gmessage(paste("One of the analysis text file subdirectories could not be saved. Is the location read-only?.",
-						sep=""), title="File error",icon="error",toolkit=guiToolkit("RGtk2"))
+				gWidgets::gmessage(paste("One of the analysis text file subdirectories could not be saved. Is the location read-only?.",
+						sep=""), title="File error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 				return(0)
 			}
 			.womCreateModelSummaryFile(modelName,subPath)
@@ -212,8 +212,8 @@
 
 	touch = try(cat(outputInfo,file=file.path(subPath,filename),append=FALSE), silent=T)
 	if (inherits(touch, "try-error")){
-		gmessage(paste("The model summary file for '", modelName,"' could not be saved. Is the location read-only?.",
-					sep=""), title="File error",icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("The model summary file for '", modelName,"' could not be saved. Is the location read-only?.",
+					sep=""), title="File error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(0)
 	}
 }
@@ -230,8 +230,8 @@
 		filename = file.path(directoryName,paste(analysisName,".txt",sep=""))
 		touch = try(cat(header,file=filename,append=FALSE), silent=T)
 		if (inherits(touch, "try-error")){
-			gmessage(paste("The analysis summary file could not be saved. Is the location read-only?.",
-						sep=""), title="File error",icon="error",toolkit=guiToolkit("RGtk2"))
+			gWidgets::gmessage(paste("The analysis summary file could not be saved. Is the location read-only?.",
+						sep=""), title="File error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 			return(0)
 		}
 				

@@ -8,7 +8,8 @@
      interface for the \code{WMCapacity} package.
      }
      \usage{
-     wommbatGUI(project = NULL, projectFile= NULL, CSVfile = NULL, dataFrame = NULL, devel=FALSE)
+     wommbatGUI(project = NULL, projectFile= NULL, CSVfile = NULL, 
+      dataFrame = NULL, devel=FALSE)
      }
      \arguments{
        \item{dataFrame}{a data frame containing the trial-by-trial data to be

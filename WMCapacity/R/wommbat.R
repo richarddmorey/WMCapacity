@@ -37,7 +37,7 @@ wommbatGUI <- function(project = NULL, projectFile= NULL,CSVfile = NULL, dataFra
 	
 	# Connect scrollbar signal
 	scrollBar <- theWidget("hscrollbar1")
-	adjustment <- gtkAdjustmentNew(value = 1, lower = 1, upper = 1, step.inc=1)
+	adjustment <- gtkAdjustmentNew(value = 1, lower = 1, upper = 1, step.incr=1)
 	scrollBar$setAdjustment(adjustment)
 	gtkAdjustmentSetValue(scrollBar$getAdjustment(), 1)
 	StateEnv$handlers$diagnosticScrollBar1 <- gSignalConnect(theWidget("hscrollbar1"), "value-changed", .scrolled_diagnostics_scrollbar)

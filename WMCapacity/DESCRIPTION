@@ -12,8 +12,3 @@ Description: A GUI R implementation of hierarchical Bayesian models of working m
 License: GPL-2
 LazyLoad: yes
 URL: http://drsmorey.org/research/rdmorey/
-Repository: CRAN
-Repository/R-Forge/Project: wmcapacity
-Repository/R-Forge/Revision: 64
-Date/Publication: 2011-11-24 09:13:09
-Packaged: 2011-11-16 21:51:15 UTC; rforge

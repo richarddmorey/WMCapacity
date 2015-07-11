@@ -35,8 +35,8 @@ as.integer(COLUMNS[name])
 {
 	dataset = try(read.csv(filename), silent=T)
 	if (inherits(dataset, "try-error")){
-		gmessage(paste("The file '",filename,"' could not be loaded. The probable cause this of error is that the file is not in CSV format.",
-						sep=""), title="File error",icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("The file '",filename,"' could not be loaded. The probable cause this of error is that the file is not in CSV format.",
+						sep=""), title="File error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(0)
 	}
 	
@@ -67,8 +67,8 @@ as.integer(COLUMNS[name])
 
 .womCopyModelInfo <- function(project)
 {
-	rm(list=ls(env=wommbatAnalysis),envir=wommbatAnalysis)
-	x = ls(env=project)
+	rm(list=ls(envir=wommbatAnalysis),envir=wommbatAnalysis)
+	x = ls(envir=project)
 	eval(parse(text = paste("wommbatAnalysis$",x,"<-project$",x,sep="")))
 }
 
@@ -79,8 +79,8 @@ as.integer(COLUMNS[name])
 	myPage <- gtkNotebookGetCurrentPage(theWidget("notebook1"))
 	
 	if(!is.environment(project)){
-		gmessage(paste("The project could not be loaded. The object passed to the function is not an R environment.",
-						sep=""), title="Project load error",icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("The project could not be loaded. The object passed to the function is not an R environment.",
+						sep=""), title="Project load error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(0)	
 	}else{
 		
@@ -89,14 +89,14 @@ as.integer(COLUMNS[name])
 		# check data set
 		if(is.null(wommbatAnalysis$data))
 		{
-			gmessage(paste("The project could not be loaded. No data was found; is the environment a WoMMBAT data analysis?",
-				sep=""), title="Project load error",icon="error",toolkit=guiToolkit("RGtk2"))
+			gWidgets::gmessage(paste("The project could not be loaded. No data was found; is the environment a WoMMBAT data analysis?",
+				sep=""), title="Project load error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 			return(0)	
 
 		}
 		
 		# Load data
-		.womSetDataForColumnSelection(wommbatAnalysis$data,rem=FALSE,filename=projectFile)
+		.womSetDataForColumnSelection(wommbatAnalysis$data,removeModels=FALSE,filename=projectFile)
 		gtkNotebookSetCurrentPage(theWidget("notebook1"), .womNotebookPages("data"))
 	
 		if(!is.null(wommbatAnalysis$Ktype))
@@ -158,10 +158,10 @@ as.integer(COLUMNS[name])
 .womLoadProjectFile <- function(projectFile)
 {
 	myNewEnv = new.env(parent=globalenv())
-	loaded = try(load(projectFile,env=myNewEnv), silent=T)
+	loaded = try(load(projectFile,envir=myNewEnv), silent=T)
 	if (inherits(loaded, "try-error")){
-		gmessage(paste("The file '",projectFile,"' could not be loaded. The probable cause of this error is that the file is not an R save file.",
-						sep=""), title="File error",icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("The file '",projectFile,"' could not be loaded. The probable cause of this error is that the file is not an R save file.",
+						sep=""), title="File error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(0)
 	}
 	
@@ -228,7 +228,7 @@ as.integer(COLUMNS[name])
 	# Confirm that it is ok to reset the interface.
 	if(length(wommbatAnalysis$Models)>0)
 	{
-		confirm = gconfirm("This will remove all existing models and analyses.", title="Reset interface?",toolkit=guiToolkit("RGtk2"))
+		confirm = gWidgets::gconfirm("This will remove all existing models and analyses.", title="Reset interface?",toolkit=gWidgets::guiToolkit("RGtk2"))
 		if(!confirm) return(0)
 	}
 	
@@ -236,7 +236,7 @@ as.integer(COLUMNS[name])
 	cols <- colnames(dataset)
 	if(any(is.null(cols)))
 	{
-		gmessage("The data set could not be loaded, because there were no column names.", title="Data error",icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage("The data set could not be loaded, because there were no column names.", title="Data error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(0)
 	}
 	
@@ -244,14 +244,14 @@ as.integer(COLUMNS[name])
 	myDims = dim(dataset)
 	if(myDims[1]<2 | myDims[2]<4)
 	{
-		gmessage("The data set could not be loaded, because too few rows (<2) or columns (<4).", title="Data error",icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage("The data set could not be loaded, because too few rows (<2) or columns (<4).", title="Data error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(0)
 
 	}
 	
 	# check to make sure all column names are unique. If not, error.
 	if(any(table(cols))>1){
-	gmessage("The data set could not be loaded, because some column names were duplicates.", title="Data error",icon="error",toolkit=guiToolkit("RGtk2"))
+	gWidgets::gmessage("The data set could not be loaded, because some column names were duplicates.", title="Data error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(0)
 	}
 	wommbatAnalysis$data <- dataset
@@ -439,13 +439,13 @@ as.integer(COLUMNS[name])
 			if(!is.integer(wommbatAnalysis$data[,colnum]) | any(wommbatAnalysis$data[,colnum]<1))
 			{
 				# Inappropriate data in column
-				gmessage(paste("Invalid set size column data:",selCol), title="Data error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+				gWidgets::gmessage(paste("Invalid set size column data:",selCol), title="Data error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 				return(0)
 			}
 		}else{
-			gmessage("Could not find selected column in data set! This should not have happened.",
-				title="Interface error",icon="error",toolkit=guiToolkit("RGtk2"))
+			gWidgets::gmessage("Could not find selected column in data set! This should not have happened.",
+				title="Interface error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		}
 
 		
@@ -487,13 +487,13 @@ as.integer(COLUMNS[name])
 			if(!identical(sort(as.integer(unique(wommbatAnalysis$data[,colnum]))),as.integer(c(0,1))))
 			{
 				# Inappropriate data in column
-				gmessage(paste("Invalid response column data:", selCol), title="Data error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+				gWidgets::gmessage(paste("Invalid response column data:", selCol), title="Data error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 				return(0)
 			}
 		}else{
-			gmessage("Could not find selected column in data set! This should not have happened.",
-				title="Interface error",icon="error",toolkit=guiToolkit("RGtk2"))
+			gWidgets::gmessage("Could not find selected column in data set! This should not have happened.",
+				title="Interface error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 			return(0)
 		}
 
@@ -534,13 +534,13 @@ as.integer(COLUMNS[name])
 			if(!identical(sort(as.integer(unique(wommbatAnalysis$data[,colnum]))),as.integer(c(0,1))))
 			{
 				# Inappropriate data in column
-				gmessage(paste("Invalid change column data:",selCol), title="Data error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+				gWidgets::gmessage(paste("Invalid change column data:",selCol), title="Data error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 				return(0)
 			}
 		}else{
-			gmessage("Could not find selected column in data set! This should not have happened.",
-				title="Interface error",icon="error",toolkit=guiToolkit("RGtk2"))
+			gWidgets::gmessage("Could not find selected column in data set! This should not have happened.",
+				title="Interface error",icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 			return(0)
 		}
 
@@ -657,8 +657,8 @@ as.integer(COLUMNS[name])
 	nRows <- gtkTreeModelIterNChildren(model2, NULL)	
 	if(nRows==0)
 	{
-		gmessage(paste("You must define at least one column of interest."), title="Data error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("You must define at least one column of interest."), title="Data error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(0)
 	}
 	
@@ -683,8 +683,8 @@ as.integer(COLUMNS[name])
 	
 	if(respText=="" | changeText=="" | setsizeText=="")
 	{
-		gmessage(paste("You must define the response, change, and setsize columns."), title="Data error",
-					icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("You must define the response, change, and setsize columns."), title="Data error",
+					icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(0)
 	}
 	

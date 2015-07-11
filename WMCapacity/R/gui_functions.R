@@ -95,8 +95,8 @@ getpackagefile <- function(filename) {
 
 .womGetDataFrameList<-function(envir=globalenv())
 {
-	n =  sapply(ls(env=envir),function(x){
-			eval(parse(text=paste("is.data.frame(",x,")",sep="")),env=globalenv())
+	n =  sapply(ls(envir=envir),function(x){
+			eval(parse(text=paste("is.data.frame(",x,")",sep="")),envir=globalenv())
 				}
 	)
 	n=n[n]
@@ -108,25 +108,25 @@ getpackagefile <- function(filename) {
 {
 	listOfObjects <- .womGetDataFrameList(envir=envir)
 	if(dim(listOfObjects)[1]<1){
-		gmessage(paste("There are no data frames in the R global environment."), title="Data error",
-		icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("There are no data frames in the R global environment."), title="Data error",
+		icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(0)
 
 	}
-	toplevel = gwindow("Select R data.frame...")
-	gtable(listOfObjects,
+	toplevel = gWidgets::gwindow("Select R data.frame...")
+	gWidgets::gtable(listOfObjects,
 		container = toplevel,
 		action=NULL,
 		handler = function(h,...) {
-			.womSetDataForColumnSelection(eval(parse(text=as.character(svalue(h$obj)))))
-			dispose(toplevel)
+			.womSetDataForColumnSelection(eval(parse(text=as.character(gWidgets::svalue(h$obj)))))
+			gWidgets::dispose(toplevel)
 		},toplevel=toplevel)
 }
 
 .womGetDataFrame <- function(name)
 {
 	if(length(name)>1) return(NULL)
-	z = eval(parse(text=name),env=globalenv())
+	z = eval(parse(text=name),envir=globalenv())
 	if(is.data.frame(z)){
 		return(z)
 	}else{
@@ -171,8 +171,8 @@ getpackagefile <- function(filename) {
 
 fileChoose <- function(action="cat", text = "Select a file...", type="open", ...) 
 {
-	gfile(text=text, type=type, ..., action = action, handler =
-		function(h,...) { do.call(h$action, list(h$file)) }, toolkit=guiToolkit("RGtk2")
+	gWidgets::gfile(text=text, type=type, ..., action = action, handler =
+		function(h,...) { do.call(h$action, list(h$file)) }, toolkit=gWidgets::guiToolkit("RGtk2")
 		)
 			
 }
@@ -227,20 +227,6 @@ packageIsAvailable <- function(pkg, msg=NULL)
 {
   if (pkg %notin% rownames(installed.packages()))
   {
-    if (not.null(msg))
-      if (questionDialog(sprintf(Rtxt("The package '%s' is required to %s.",
-                                      "It does not appear to be installed.",
-                                      "A package can be installed",
-                                      "with the following R command:",
-                                      "\n\ninstall.packages('%s')",
-                                      "\n\nThis will allow access to use",
-                                      "the full functionality of %s.",
-                                      "\n\nWould you like the package to be installed now?"),
-                                 pkg, msg, pkg, crv$appname)))
-      {
-        install.packages(pkg)
-        return(TRUE)
-      }
     return(FALSE)
   }
   else

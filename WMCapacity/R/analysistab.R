@@ -376,23 +376,23 @@
 
 	if(inherits(startIters, "try-error") | is.na(startIters))
 	{
-		gmessage(paste("Could not coerce the optim() iterations to integer."), title="Settings error",
-			icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("Could not coerce the optim() iterations to integer."), title="Settings error",
+			icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(FALSE)
 	}
 	
 	if(inherits(MCMCIters, "try-error") | inherits(burninIters, "try-error") |
 		is.na(MCMCIters) | is.na(burninIters))
 	{
-		gmessage(paste("Could not coerce MCMC or burnin iterations to integers."), title="Settings error",
-			icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("Could not coerce MCMC or burnin iterations to integers."), title="Settings error",
+			icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(FALSE)
 	}
 	
 	if(MCMCIters<1 | burninIters<1 | MCMCIters<=burninIters)
 	{
-		gmessage(paste("MCMC and burnin iterations must both be greater than 0, and burnin iterations must be less than the total MCMC iterations."), title="Settings error",
-			icon="error",toolkit=guiToolkit("RGtk2"))
+		gWidgets::gmessage(paste("MCMC and burnin iterations must both be greater than 0, and burnin iterations must be less than the total MCMC iterations."), title="Settings error",
+			icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 		return(FALSE)
 	}
 
@@ -407,14 +407,14 @@
 		if(inherits(MHScale, "try-error") | inherits(MHThin, "try-error") | 
 			is.na(MHScale) | is.na(MHThin))
 		{
-			gmessage(paste("Could not coerce random walk Metropolis-Hastings settings to numerics."), title="Settings error",
-			icon="error",toolkit=guiToolkit("RGtk2"))
+			gWidgets::gmessage(paste("Could not coerce random walk Metropolis-Hastings settings to numerics."), title="Settings error",
+			icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 			return(FALSE)
 		}
 		if(MHScale <= 0 | MHThin<1 | MHThin>=MCMCIters)
 		{
-			gmessage(paste("Metropolis-Hastings scale must be greater than 0, thinning must be at least 1 (but less than the number of total MCMC iterations)."), title="Settings error",
-			icon="error",toolkit=guiToolkit("RGtk2"))
+			gWidgets::gmessage(paste("Metropolis-Hastings scale must be greater than 0, thinning must be at least 1 (but less than the number of total MCMC iterations)."), title="Settings error",
+			icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 			return(FALSE)
 		}
 	
@@ -426,14 +426,14 @@
 		if(inherits(epsLow, "try-error") | inherits(epsUpp, "try-error") | inherits(leapfrog, "try-error") |
 			is.na(epsLow) | is.na(epsUpp) | is.na(leapfrog))
 		{
-			gmessage(paste("Could not coerce hybrid MCMC settings to numerics."), title="Settings error",
-			icon="error",toolkit=guiToolkit("RGtk2"))
+			gWidgets::gmessage(paste("Could not coerce hybrid MCMC settings to numerics."), title="Settings error",
+			icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 			return(FALSE)
 		}
 		if(epsLow<=0 | epsUpp<=0 | epsLow>epsUpp | leapfrog<1)
 		{
-			gmessage(paste("Lower and upper epsilon must be greater than 0, lower epsilon must be less than upper epsilon, and leapfrog steps must be at least 1."), title="Settings error",
-			icon="error",toolkit=guiToolkit("RGtk2"))
+			gWidgets::gmessage(paste("Lower and upper epsilon must be greater than 0, lower epsilon must be less than upper epsilon, and leapfrog steps must be at least 1."), title="Settings error",
+			icon="error",toolkit=gWidgets::guiToolkit("RGtk2"))
 			return(FALSE)
 		}
 	
@@ -492,7 +492,7 @@
 
 	if(cov)
 	{
-		results$meanChains = mcmc(t(output[[3]]))
+		results$meanChains = coda::mcmc(t(output[[3]]))
 		results$covChains = list()
         results$corChains = list()
         if(myModel$settings$predProbs) results$predVals = output[[5]]
@@ -513,8 +513,8 @@
 	
 	results$accRate = round(mean(diff(output[[2]])!=0),3)
 	postSD = apply(output[[1]][,(myModel$settings$burninIters+1):as.integer(myModel$settings$effectiveIters)],1,sd)
-	effSize = apply(output[[1]][,(myModel$settings$burninIters+1):as.integer(myModel$settings$effectiveIters)],1,effectiveSize)
-	specar = unlist(apply(output[[1]][,(myModel$settings$burninIters+1):as.integer(myModel$settings$effectiveIters)],1,spectrum0.ar))
+	effSize = apply(output[[1]][,(myModel$settings$burninIters+1):as.integer(myModel$settings$effectiveIters)],1,coda::effectiveSize)
+	specar = unlist(apply(output[[1]][,(myModel$settings$burninIters+1):as.integer(myModel$settings$effectiveIters)],1,coda::spectrum0.ar))
 	specar = matrix(specar,nrow=2)[1,]
 	results$pointEst = .womNiceParVec(rowMeans(output[[1]][,(myModel$settings$burninIters+1):as.integer(myModel$settings$effectiveIters)]), 
 										myModel$model$newDat2Cat, myModel$model$newDat2Cont, myModel$model$namedDat2, myModel$model$effects, 
@@ -523,7 +523,7 @@
 	chainnames=paste(results$pointEst[,4],results$pointEst[,2],results$pointEst[,3],sep=" ")
 	chainnames=paste(chainnames,results$pointEst[,1],sep=" on ")
 	## Add in names of Covariance matrices!
-	results$effectChains=mcmc(t(output[[1]]))
+	results$effectChains=coda::mcmc(t(output[[1]]))
 	dimnames(results$effectChains)[[2]] = chainnames
 	if(myModel$settings$useMH){
 		results$likeChain = output[[2]][((1:as.integer(myModel$settings$MCMCIters))%%as.integer(myModel$settings$MHThin))==0]
