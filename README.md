@@ -18,6 +18,6 @@ To install the latest development version, you can use `install_github` from the
 install.packages('devtools')
 ## Load devtools package for install_github()
 library(devtools)
-## get BayesFactor from github
+## install from github
 install_github('richarddmorey/WMCapacity', subdir='WMCapacity', dependencies = TRUE)
 ```
