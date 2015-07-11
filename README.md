@@ -1,6 +1,7 @@
-# WMCapacity
+# WMCapacity (WoMMBAT)
 A GUI R implementation of hierarchical Bayesian models of working memory, used for analyzing change detection data.
 
+See Morey (2011) for modelling details (paper here: http://www.sciencedirect.com/science/article/pii/S0022249610001094), and Morey & Morey (2011) for the software manual (paper here, open access: http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3218285/). 
 
 ### Installing
 
