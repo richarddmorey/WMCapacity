@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<interface>
+  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-naming-policy toplevel-contextual -->
+  <object class="GtkAboutDialog" id="aboutdialog1">
+    <property name="border_width">5</property>
+    <property name="type_hint">normal</property>
+    <property name="program_name">WoMMBAT</property>
+    <property name="copyright" translatable="yes">Copyright 2010, Richard D. Morey</property>
+    <property name="comments" translatable="yes">Working Memory Modeling using Bayesian Analysis Techniques</property>
+    <property name="website">http://drsmorey.org/research/rdmorey</property>
+    <property name="website_label" translatable="yes">More about WoMMBAT</property>
+    <property name="license" translatable="yes">GPL2</property>
+    <property name="authors">Richard D. Morey</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox1">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child>
+          <placeholder/>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area1">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

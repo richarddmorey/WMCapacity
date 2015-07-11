@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<WMCapacity-tooltips>
+<tooltip widget="dataUnlockButton">Makes column selection active with current data set, but removes all currently defined models.</tooltip>
+<tooltip widget="dataOpenCSV">Opens a CSV file from disk.</tooltip>
+<tooltip widget="button6">Choose a currently defined R data frame.</tooltip>
+<tooltip widget="button7">Opens a saved analysis from the disk.</tooltip>
+<tooltip widget="dataResponseButton">Set response column (0 = "no change, 1="change")</tooltip>
+<tooltip widget="dataChangeButton">Set change column: (0=no change, 1=change)</tooltip>
+<tooltip widget="dataSetsizeButton">Set set-size column (integers&gt;0)</tooltip>
+<tooltip widget="dataCatButton">Define a cetegorical column (for defining random effects)</tooltip>
+<tooltip widget="dataContButton">Define a continuous column (for defining slope effects)</tooltip>
+<tooltip widget="dataRemoveColButton">Remove column from columns of interest.</tooltip>
+<tooltip widget="dataDoneButton">Begin model building with specified data columns</tooltip>
+<tooltip widget="modelsAddKButton">Add selected available effect to the model on capacity (K).</tooltip>
+<tooltip widget="modelsRemoveKButton">Remove the effect from the model on capacity (K).</tooltip>
+<tooltip widget="modelsNewKCovButton">Add effect to new covariance group</tooltip>
+<tooltip widget="modelsAddKCovButton">Add effect to selected covariance group</tooltip>
+<tooltip widget="modelsUseZCheckbox">Turn the modeling of lapsing on/off. If models on lapsing is off, lapsing is set to a low value (about 5%).</tooltip>
+<tooltip widget="modelsAddZButton">Add selected available effect to the model on lapsing (Z).</tooltip>
+<tooltip widget="modelsRemoveZButton">Remove the effect from the model on lapsing (Z).</tooltip>
+<tooltip widget="modelsNewZCovButton">Add effect to new covariance group</tooltip>
+<tooltip widget="modelsAddZCovButton">Add effect to selected covariance group</tooltip>
+<tooltip widget="modelsAddGButton">Add selected available effect to the model on guessing (G).</tooltip>
+<tooltip widget="modelsRemoveGButton">Remove the effect from the model on guessing (G).</tooltip>
+<tooltip widget="modelsNewGCovButton">Add effect to new covariance group</tooltip>
+<tooltip widget="modelsAddGCovButton">Add effect to selected covariance group</tooltip>
+<tooltip widget="modelsRemoveCov">Remove selected covariance element or group</tooltip>
+<tooltip widget="modelsDefinedModelsTreeview">Double-click on a model to copy the model into the specification above.</tooltip>
+<tooltip widget="analysisDefinedModelsTreeview">Double-click model to use the model's analysis settings</tooltip>
+<tooltip widget="diagnosticDefinedModelsTreeview">Select a model to see the diagnostic plots for the model chains.</tooltip>
+<tooltip widget="resultsDefinedModelsTreeview">Select a model to see the parameter estimates for the model.</tooltip>
+<tooltip widget="resultsParEstTreeview">Select row(s) to copy the values to the clipboard. Double-click on the row to see a multiple comparison analysis for that row.</tooltip>
+</WMCapacity-tooltips>
